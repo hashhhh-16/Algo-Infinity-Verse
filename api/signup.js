@@ -379,11 +379,12 @@ export default async function handler(req, res) {
           ip: clientId,
           at: new Date().toISOString(),
         });
-       if (error.message === "DUPLICATE_USER") {
-         console.info(`Duplicate signup attempt (transaction) for email: ${cleanEmail}`);
+
+        console.info(`Duplicate signup attempt (transaction) for email: ${cleanEmail}`);
+
          // Same generic 200 as the non-Firestore path above.
          return res.status(200).json({ ok: true });
-       }
+       
       }
 
       throw error;
