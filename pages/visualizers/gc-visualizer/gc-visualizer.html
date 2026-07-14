@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Garbage Collection Simulator | Algo Infinity Verse</title>
+    <meta
+      name="description"
+      content="Interactive visualization of Mark and Sweep Garbage Collection."
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Poppins:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- External Stylesheets -->
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="gc-visualizer.css" />
+    <!-- Theme Initialization Script -->
+    <script>
+      (function () {
+        try {
+          var storedTheme = localStorage.getItem('theme');
+          var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+          var theme = storedTheme || (prefersLight ? 'light' : 'dark');
+          if (theme === 'light') {
+            document.documentElement.classList.add('light-mode');
+          } else {
+            document.documentElement.classList.remove('light-mode');
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <script src="/theme.js"></script>
+  </head>
+  <body class="gc-body">
+    <nav class="navbar">
+      <div class="nav-logo">
+        <span class="logo-text">∞</span>
+        <span class="logo-title">Algo Infinity Verse</span>
+      </div>
+      <div class="engine-badge" id="engineBadge">
+        <i class="fas fa-memory"></i> V8 Memory Engine
+      </div>
+    </nav>
+
+    <div class="main-content">
+      <header class="app-header">
+        <div class="header-title">
+          <h1><i class="fas fa-memory"></i> Garbage Collection (Mark & Sweep)</h1>
+          <p>Allocate objects, manage references, and watch the GC sweep unreachable memory</p>
+        </div>
+      </header>
+
+      <main class="dashboard-grid">
+        <!-- Controls Panel -->
+        <section class="panel glassy controls-panel">
+          <div class="control-group">
+            <label>Actions:</label>
+            <div class="btn-group">
+              <button id="btnAlloc" class="btn btn-secondary">
+                <i class="fas fa-plus"></i> Allocate Object
+              </button>
+              <button id="btnAddRef" class="btn btn-secondary">
+                <i class="fas fa-link"></i> Add Reference
+              </button>
+              <button id="btnDropRoot" class="btn btn-secondary">
+                <i class="fas fa-unlink"></i> Drop Root Ref
+              </button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label>Garbage Collector:</label>
+            <div class="btn-group">
+              <button id="btnTriggerGC" class="btn btn-primary">
+                <i class="fas fa-broom"></i> Trigger GC
+              </button>
+              <button id="btnStep" class="btn btn-accent" disabled>
+                <i class="fas fa-step-forward"></i> Step Phase
+              </button>
+              <button
+                id="btnReset"
+                class="btn btn-danger"
+                style="background: #ef4444; color: white"
+              >
+                <i class="fas fa-rotate-left"></i> Reset Memory
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Status Panel -->
+        <section class="panel glassy status-panel">
+          <div class="status-item">
+            <span class="status-label">GC Status:</span>
+            <span class="status-value" id="stat-gc">Idle</span>
+          </div>
+          <div class="status-item">
+            <span class="status-label">Objects in Heap:</span>
+            <span class="status-value" id="stat-heap">0</span>
+          </div>
+          <div class="status-item legend-box">
+            <span class="status-label">Legend:</span>
+            <div class="legend-items">
+              <div class="legend-item">
+                <div class="color-box root-color"></div>
+                Root Set
+              </div>
+              <div class="legend-item">
+                <div class="color-box unmarked-color"></div>
+                Unmarked
+              </div>
+              <div class="legend-item">
+                <div class="color-box marked-color"></div>
+                Marked (Reachable)
+              </div>
+              <div class="legend-item">
+                <div class="color-box sweep-color"></div>
+                Swept (Collected)
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Canvas Container -->
+        <section class="panel glassy canvas-panel">
+          <!-- Overlay instructions when Add Ref is active -->
+          <div id="instructionOverlay" class="instruction-overlay hidden">
+            Click first object, then second object to connect.
+            <button id="btnCancelRef" class="btn-small">Cancel</button>
+          </div>
+          <div class="canvas-wrapper">
+            <canvas id="gcCanvas"></canvas>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="gc-visualizer.js"></script>
+  </body>
+</html>
