@@ -216,7 +216,7 @@ function initProgressTracker() {
   const fill = document.getElementById("progressFill");
   const count = document.getElementById("progressCount");
   const bar = document.querySelector(".java-progress-bar");
-
+  const announcement = document.getElementById("progressAnnouncement");
   if (!fill || !count) return;
 
   // Load saved progress
@@ -234,6 +234,10 @@ function initProgressTracker() {
     count.textContent = completed.size;
     if (bar) bar.setAttribute("aria-valuenow", pct);
   }
+    if (announcement) {
+      announcement.textContent =
+        `Learning progress updated. ${completed.size} of ${TOTAL_TOPICS} topics completed.`;
+    }
 
   updateUI();
 
