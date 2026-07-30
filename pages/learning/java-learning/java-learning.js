@@ -235,21 +235,20 @@ function initProgressTracker() {
   }
 
   function updateUI() {
-    const pct = Math.round((completed.size / TOTAL_TOPICS) * 100);
-    fill.style.width = pct + "%";
-    count.textContent = completed.size;
-    if (bar) bar.setAttribute("aria-valuenow", pct);
-      const pct = Math.round((completed.size / TOTAL_TOPICS) * 100);
-      fill.style.width = pct + "%";
-      count.textContent = completed.size;
-    if (bar) {
-      bar.setAttribute("aria-valuenow", pct);
-    }
-    if (announcement) {
-      announcement.textContent =
-          `Learning progress updated. ${completed.size} of ${TOTAL_TOPICS} topics completed.`;
-    }
+  const pct = Math.round((completed.size / TOTAL_TOPICS) * 100);
+
+  fill.style.width = pct + "%";
+  count.textContent = completed.size;
+
+  if (bar) {
+    bar.setAttribute("aria-valuenow", pct);
   }
+
+  if (announcement) {
+    announcement.textContent =
+      `Learning progress updated. ${completed.size} of ${TOTAL_TOPICS} topics completed.`;
+  }
+}
 
   updateUI();
 
