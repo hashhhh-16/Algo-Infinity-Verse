@@ -133,19 +133,19 @@ function populateServerSelect() {
 }
 
 function stGetRing() {
-    let ring = [];
+    const ring = [];
+
     state.servers.forEach(server => {
         server.hashes.forEach(angle => {
-            ring.push({ angle, serverId: server.id, color: server.color, name: server.name        });
+            ring.push({
+                angle,
+                serverId: server.id,
+                color: server.color,
+                name: server.name
+            });
+        });
     });
-    };
 
-    if (typeof lazyVisualizer !== 'undefined') {
-        lazyVisualizer.lazyLoadChartJS(els.stdDevValue.parentElement.closest('.telemetry-section') || canvas, createChart);
-    } else {
-        createChart();
-    }
-});
     ring.sort((a, b) => a.angle - b.angle);
     return ring;
 }
@@ -406,6 +406,7 @@ function initChart() {
             animation: { duration: 500 }
         }
     });
+}
 }
 
 function updateChart() {
